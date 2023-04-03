@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "rihal-codestacker",
+  "private_key_id": "1f697bbf93727fc9a55624fb299309462c87cebe",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDDCRf+CRy+BqrE\nvPnak2svB4EbK0PV5Puu2VIzbDuy+HEr4bWD4HcVrdLAV2vsjl4IqssDOmbqE4wb\n+eD9q2xd7UwwQAnqDG6wjNCnMhZr0Cezw/iFr/K6sYrdymeSDCN6DG8PnH+UnCyE\nu1F5dsAFKUaraPkehWF5yXrd0qc0TNKusLWtwObeE9/CN6LEaLm12EkEsie47/3D\nedOqVi2J7hz3LLlKHp+BCzoHO0AWn1jSfjcq5Q/Y2hLDbuMXXmICt2vRP6rVkvP1\n9Mw1Mrx4sTQ+rWjo+hSkLZp763MPpaCmIitNyYyanDjB/8pewncaS1pORtTR4SXP\nXPlHlCKPAgMBAAECggEASVB0S+KqAsanz8/HzkHHM0ULY6amV9O9RlNcAoeHg3W/\nuQKeBIZOzX/rbrEOGTzFHVXyfXKpOAmEDAoo6MJVOJOYpbSU5X2p6ETutELwSbPU\nEM+0brCeuk4+CLRqrWxRs7HT19b44Gi6lWSCsnmQogALmCicKLxz0V+LB7KFdvNX\nZuZASWkw5v19OD2a/w1Aa5co4E2LVernUPIkFtNc5crBzG07EedpIefWxGMsRW85\nVEbn644iJNp6nzQnHnLp3STZur9NjgNdiIjGBZpCj4KlflRxwNZhtm5X028gD7+M\ndyGsRjPKn/JMuuNw9I1F6vL/FysL/ssZ0IRHzzThYQKBgQDxrVUvQOWVOOMhZuZB\ngSjFtdnHtz0iuTqHAI0xuZmGlPMLWIKOMjjNdVxXqiXh8I+IZ5VLldrEhag/bktF\ncrXJ/fwy62yrK19qujzZQdujiIDFsQckwPRwhzeZ7hEwzk0dVxxH8HJnVYD52YBg\nk4pOYlAzstYIC5Q+3YOxQUFDYQKBgQDOmCBWnLm1pBBl2DsXxwrw7lE/cQss5b+V\nMyCJrTKj5nZSUhLk3Ga/X77cAGxKhJvk5OIHU/J+4JyD8IaTcrTM88UpvZ/T6Hp7\nzaSwEnRlAvw65bqCDj1C1xUp436kYjKGSLLFy/+36uoDnhO/m2KH3xR6zXwVWGoV\n5xkGUGsb7wKBgAX2geCNmFyLL8d2M34wQqJGL15nHgIKUfBcyh8M9kXEzQ5dm7MI\neDBRkfqzvwWJGvGBpMRdqS0qIxGVlhPblbKrKprTBjZe9pa6i5/MqS+qwYqfKI72\nl9Fi9LM+lXv/yxVLPe5kd14nVOxVOn6nhUUT1ejAo9lE995pNsOb2ZFhAoGBAMgY\nGYIp68ic7fDmXF2sP9GY0QKER5GluEgWq9YM9TY/uawDqB8XxUBnyKCmnDwUcjVg\n5fa4/O6cN5ums4FOIQU8uWKzMYD58t/EDlUmmqtXF9sns9vRVM5PKUVX/MnT/iGH\nefcPnU6R7TOxwGjdY7I7g0dpjFvUNXOfT+KIsyTrAoGAGLyqin0bm8paJLd6NLpR\n37rjC2hwcdUcqIUdZbZVU1zJgG7rTgbRm2rVxVAth9Seq1uhb/XQJWPCdTAJIzi8\n9jGWm7ivBZY0PTpCAJ0VVzOC9bb1nP3W9sSolbBaS32Zu/OgBhMlOKj3bq1B8Ghl\nFTUaqO9qaoUyKvc59/YWT5o=\n-----END PRIVATE KEY-----\n",
+  "client_email": "rihal-codestacker@appspot.gserviceaccount.com",
+  "client_id": "115577707979348190696",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/rihal-codestacker%40appspot.gserviceaccount.com"
+}
