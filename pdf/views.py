@@ -5,6 +5,9 @@ from rest_framework.parsers import MultiPartParser, FormParser
 
 from .models import PDF
 from .serializers import UploadPDFSerializer, PDFSerializer, NewPDFSerializer
+from .tasks import parse_pdf
+from .utils import local_save
+
 
 @api_view(["POST"])
 @parser_classes([MultiPartParser, FormParser])
@@ -14,8 +17,12 @@ def upload_pdf(req, *args, **kwargs):
         files = ser.validated_data.pop('file')
         pdfs = []
         for f in files:
-           pdf = PDF.objects.create(pdf_file=f, size=f.size)
-           pdfs.append(pdf)
+            # if PDF.objects.filter(pdf_file=f.name).exists():
+            #     return Response({'error': f'file: {f.name} already exists!'})
+            # pdf = PDF.objects.create(pdf_file=f, size=f.size)
+            # pdfs.append(pdf)
+            path = local_save(f)
+            parse_pdf.delay(1, path)
         return Response({'success': 'file/s uploaded.', 'file/s': NewPDFSerializer(pdfs, many=True).data})
     else:
         return Response({'failed': ser.errors}, status=status.HTTP_400_BAD_REQUEST)
@@ -23,8 +30,8 @@ def upload_pdf(req, *args, **kwargs):
 
 @api_view(["GET"])
 def get_pdf_info(req):
-    pdf=PDF.objects.get(id=2)
-    return Response(PDFSerializer(pdf).data)
+    parse_pdf.delay(2)
+    return Response()
 
 
 

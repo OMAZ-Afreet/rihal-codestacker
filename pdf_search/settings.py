@@ -106,6 +106,9 @@ REST_FRAMEWORK = {
 }
 
 
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_BROKER_URL = "redis://localhost:6379"
+
 
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 GS_BUCKET_NAME = 'rihal-codestacker.appspot.com'

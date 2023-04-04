@@ -2,7 +2,7 @@ from django.db import models
 
 
 class PDF(models.Model):
-    pdf_file = models.FileField()
+    pdf_file = models.FileField(unique=True)
     size = models.PositiveBigIntegerField()
     number_of_pages = models.PositiveSmallIntegerField(default=0)
     
