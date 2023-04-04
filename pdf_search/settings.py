@@ -98,6 +98,15 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+
+
+
+REST_FRAMEWORK = {
+    'UPLOADED_FILES_USE_URL': False
+}
+
+
+
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 GS_BUCKET_NAME = 'rihal-codestacker.appspot.com'
 
