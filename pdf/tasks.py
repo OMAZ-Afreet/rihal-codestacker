@@ -1,14 +1,14 @@
 import re
 from itertools import islice
 
+from django.core.files.storage import default_storage
 from celery import shared_task
 from celery.utils.log import get_task_logger
 
 from search.models import PDFSearch
 from .models import PDF
 from .pdf_parser import parse_pdf
-from .exceptions import PDFTaskUpdateFailed, LocalDeleteError
-from .utils import local_delete
+from .exceptions import PDFTaskUpdateFailed
 
 logger = get_task_logger(__name__)
 
@@ -27,9 +27,11 @@ def log_msg(id: int, err: Exception):
 
 
 @shared_task
-def parse_pdf_task(id: int, path: str):
+def parse_pdf_task(id: int, name: str):
     try:
-        p, text = parse_pdf(path)
+        pdf = default_storage.open(name, 'rb')
+        
+        p, text = parse_pdf(pdf)
         
         raw_sentences = re.split(RE, text)
         # generator for a valid sentence
@@ -52,8 +54,13 @@ def parse_pdf_task(id: int, path: str):
     except Exception as e:
         PDF.objects.filter(id=id).update(parsing_status='FAILED')
         log_msg(id, e)
-    finally:
-        try:
-            local_delete(path)
-        except LocalDeleteError as err:
-            log_msg(id, err)
+
+
+
+
+@shared_task
+def delete_pdf_object(name: str):
+    try:
+        default_storage.delete(name)
+    except Exception as e:
+        log_msg(name, e)

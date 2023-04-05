@@ -3,18 +3,19 @@ from rest_framework import serializers
 from .models import PDF
 
 
-
 class PDFSerializer(serializers.ModelSerializer):
+    file_name = serializers.FileField(source='pdf_file')
     class Meta:
         model = PDF
-        fields = '__all__'
-        read_only_fields = ('id', 'size', 'number_of_pages', 'parsing_status', 'time_of_upload')
+        exclude = ['parsing_status', 'pdf_file']
+        read_only_fields = ('id', 'size', 'number_of_pages', 'time_of_upload')
 
 
 class NewPDFSerializer(serializers.ModelSerializer):
+    file_name = serializers.FileField(source='pdf_file')
     class Meta:
         model = PDF
-        exclude = ['number_of_pages']
+        exclude = ['number_of_pages', 'pdf_file']
 
 
 class UploadPDFSerializer(serializers.Serializer):
