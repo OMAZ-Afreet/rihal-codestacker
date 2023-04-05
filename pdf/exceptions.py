@@ -3,3 +3,6 @@ class LocalSaveError(Exception):
 
 class LocalDeleteError(Exception):
     pass
+
+class PDFTaskUpdateFailed(Exception):
+    pass

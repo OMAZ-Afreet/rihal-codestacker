@@ -14,6 +14,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "pdf",
+    "search",
     "rest_framework",
     
     # "django.contrib.admin",
