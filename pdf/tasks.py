@@ -1,7 +1,6 @@
 import re
 from itertools import islice
 
-from django.core.files.storage import default_storage
 from celery import shared_task
 from celery.utils.log import get_task_logger
 
@@ -9,6 +8,7 @@ from search.models import PDFSearch
 from .models import PDF
 from .pdf_parser import parse_pdf
 from .exceptions import PDFTaskUpdateFailed
+from .utils import get_file, delete_file
 
 logger = get_task_logger(__name__)
 
@@ -27,11 +27,9 @@ def log_msg(id: int, err: Exception):
 
 
 @shared_task
-def parse_pdf_task(id: int, name: str):
+def parse_pdf_task(id: int, path: str):
     try:
-        pdf = default_storage.open(name, 'rb')
-        
-        p, text = parse_pdf(pdf)
+        p, text = parse_pdf(path)
         
         raw_sentences = re.split(RE, text)
         # generator for a valid sentence
@@ -59,8 +57,8 @@ def parse_pdf_task(id: int, name: str):
 
 
 @shared_task
-def delete_pdf_object(name: str):
+def delete_pdf_object(path: str):
     try:
-        default_storage.delete(name)
+        delete_file(path)
     except Exception as e:
-        log_msg(name, e)
+        log_msg(path, e)
