@@ -91,24 +91,49 @@ def get_page_image(req, id, page, *args, **kwargs):
     try:
         dpi = 96
         frmt = 'jpeg'
-        if i := req.data.get('dpi', None) is not None and i > 0:
-            dpi = i 
         
-        if j := req.data.get('format', None) is not None and j in ['jpeg', 'png']:
-            frmt = j 
+        if i := req.data.get('dpi', None):
+            try:
+                dpi = int(i) if int(i) > 0 else dpi
+            except:
+                dpi = dpi
+        
+        if j := req.data.get('format', None):
+            frmt = j if j in ['jpeg', 'png'] else frmt
         
         p = PDF.objects.get(id=id)
         img = page_to_image(p.pdf_file.name, page, dpi)
-        res = FileResponse(ContentFile(img), filename=f'{p.pdf_file.name}_page_{page}.{frmt}', as_attachment=True)
+        res = FileResponse(ContentFile(img), filename=f'{p.pdf_file.name}_page_{page}.{frmt}')
         return res
     except PDF.DoesNotExist:
         return Response({'error': f'pdf file with ID:{id} NOT FOUND'}, status=status.HTTP_404_NOT_FOUND)
     except ValueError:
-        return Response({'error': f'Page: {page} not in pdf: {p.pdf_file.name}\nPossible Pages: 1-{p.number_of_pages}'}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'error': f'Page: {page} not in pdf: {p.pdf_file.name} | Possible Pages: 1-{p.number_of_pages}'}, status=status.HTTP_404_NOT_FOUND)
 
 
-
-
+@api_view(["GET"])
+def download_page_image(req, id, page, *args, **kwargs):
+    try:
+        dpi = 96
+        frmt = 'jpeg'
+        
+        if i := req.data.get('dpi', None):
+            try:
+                dpi = int(i) if int(i) > 0 else dpi
+            except:
+                dpi = dpi
+        
+        if j := req.data.get('format', None):
+            frmt = j if j in ['jpeg', 'png'] else frmt
+        
+        p = PDF.objects.get(id=id)
+        img = page_to_image(p.pdf_file.name, page, dpi)
+        res = FileResponse(ContentFile(img), filename=f'{p.pdf_file.name}_page_{page}.{frmt}')
+        return res
+    except PDF.DoesNotExist:
+        return Response({'error': f'pdf file with ID:{id} NOT FOUND'}, status=status.HTTP_404_NOT_FOUND)
+    except ValueError:
+        return Response({'error': f'Page: {page} not in pdf: {p.pdf_file.name} | Possible Pages: 1-{p.number_of_pages}'}, status=status.HTTP_404_NOT_FOUND)
 
 
 
