@@ -1,10 +1,13 @@
 from rest_framework.response import Response
+from django.views.decorators.cache import cache_page
 from rest_framework import status
 from rest_framework.decorators import api_view
 
 from .models import PDFSearch
 from .serializers import SearchSerializer, PDFSearchSerializer
 from .algorithms import count_word_algo
+from .utils import bench
+
 
 @api_view(["GET"])
 def search(req, *args, **kwargs):
@@ -18,9 +21,19 @@ def search(req, *args, **kwargs):
 
 
 
-import time
 @api_view(["GET"])
+@cache_page(60 * 60 * 24 * 30)
 def count_word(req, id, word, *args, **kwargs):
     result = PDFSearch.objects.filter(pdf_id=id, sentence__iregex=fr'\b{word}\b').values_list('sentence', flat=True)
     sentences = list(result)
-    return Response({'pdf_ID': id, 'word': word, 'count': count_word_algo(word, sentences), 'sentences': sentences})
+    c = bench(count_word_algo, word, sentences)
+    return Response({'pdf_ID': id, 'word': word.lower(), 'count': count_word_algo(word, sentences), 'sentences': sentences})
+
+
+
+
+
+
+
+
+

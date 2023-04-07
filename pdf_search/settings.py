@@ -108,7 +108,7 @@ REST_FRAMEWORK = {
 
 
 CELERY_TIMEZONE = TIME_ZONE
-CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_BROKER_URL = "redis://127.0.0.1:6379"
 
 
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
@@ -119,3 +119,12 @@ from google.oauth2 import service_account
 GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
     BASE_DIR / "pdf_search/rihal-codestacker-storage.json"
 )
+
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+        "TIMEOUT": None
+    }
+}
