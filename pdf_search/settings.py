@@ -101,7 +101,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 
-
 REST_FRAMEWORK = {
     'UPLOADED_FILES_USE_URL': False
 }
