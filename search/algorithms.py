@@ -21,24 +21,32 @@ def count_word_algo(word: str, sentences: list[str]) -> int:
     l =  re.findall(fr'\b{word}\b', textIO.getvalue(), re.IGNORECASE)
     return len(l)
 
-
-def top_5_words_algo(gen_sen, ignore=None | str) -> dict[str, int]:
-    ignore_words = [*STOP_WORDS]
+WORDS = re.compile(r'\b\w+\b')
+def top_5_words_algo(gen_sen, ignore=None | str, top=None | str) -> dict[str, int]:
+    ignore_words = {*STOP_WORDS}
+    _top = 5
     if ignore:
-        ignore_words.extend((j.strip() for j in ignore.lower().split(',')))
+        ignore_words.update((j.strip() for j in ignore.lower().split(',')))
+    
+    if top:
+        try:
+            _top = int(top)
+        except:
+            pass
+    
+    # print(ignore_words)
     textIO = StringIO()
-    f = open('./temp/raw.txt', 'w')
-    fs = open('./temp/sep.txt', 'w')
+    # f = open('./temp/raw.txt', 'w')
+    # fs = open('./temp/sep.txt', 'w')
     for sen in gen_sen:
         textIO.write(sen.lower())
         textIO.write(" ")
-        f.write(sen.lower())
-        f.write(" ")
-    t = textIO.getvalue()
-    for s in t.split():
-        k = s.strip()
-        w = k if k not in ignore_words else f"DELETED {k}"
-        fs.write(w)
-        fs.write('\n')
-    gen = (i for i in t.split() if i not in ignore_words)
-    return Counter(gen).most_common(5)
+        # f.write(sen.lower())
+        # f.write(" ")
+    t =  re.findall(r'\b\w+\b', textIO.getvalue())
+    # for s in t:
+    #     w = s if s not in ignore_words else f"DELETED {s}"
+    #     fs.write(w)
+    #     fs.write('\n')
+    gen = (i for i in t if i not in ignore_words and len(i) > 2)
+    return Counter(gen).most_common(_top)

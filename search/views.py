@@ -1,3 +1,5 @@
+import json 
+
 from rest_framework.response import Response
 from django.views.decorators.cache import cache_page
 from rest_framework import status
@@ -7,7 +9,8 @@ from pdf.models import PDF
 from .models import PDFSearch
 from .serializers import SearchSerializer, PDFSearchSerializer
 from .algorithms import count_word_algo, top_5_words_algo
-from .utils import bench
+# from .utils import bench
+from .caches import set_top5_cache, check_top5_cache
 
 
 @api_view(["GET"])
@@ -37,12 +40,21 @@ def count_word(req, id, word, *args, **kwargs):
 
 @api_view(["GET", "POST"])
 def top_5_words(req, id, *args, **kwargs):
-    if not PDF.objects.filter(id=id).exists():
-        return Response({'error': f'pdf file with ID:{id} NOT FOUND'}, status=status.HTTP_404_NOT_FOUND)
-    sen_gen = (s for s in PDFSearch.objects.filter(pdf_id=id).values_list('sentence', flat=True))
-    print(req.data)
-    r = bench(top_5_words_algo, sen_gen, req.data.get('ignore', None))
-    return Response({i[0]:i[1] for i in r})
+    words = req.data.get('ignore', None)
+    top = req.data.get('top', None)
+    
+    is_cached, cached_result = check_top5_cache(id, words, top)
+    
+    if is_cached:
+        return Response(json.loads(cached_result))
+    else:
+        if not PDF.objects.filter(id=id).exists():
+            return Response({'error': f'pdf file with ID:{id} NOT FOUND'}, status=status.HTTP_404_NOT_FOUND)
+        sen_gen = (s for s in PDFSearch.objects.filter(pdf_id=id).values_list('sentence', flat=True))
+        result = top_5_words_algo(sen_gen, words, top)
+        res = {i[0]:i[1] for i in result}
+        set_top5_cache(id, words, top, res)
+        return Response(res)
 
 
 @api_view(["GET"])
