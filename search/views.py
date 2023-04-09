@@ -7,22 +7,37 @@ from rest_framework.decorators import api_view
 
 from pdf.models import PDF
 from .models import PDFSearch
-from .serializers import SearchSerializer, PDFSearchSerializer
+from .serializers import SearchSerializer, PDFSearchSerializer, AdvancedSearchSerializer
 from .algorithms import count_word_algo, top_5_words_algo
 # from .utils import bench
+from .stop_words import STOP_WORDS
 from .caches import set_top5_cache, check_top5_cache
+from .advanced import ADVANCE_SEARCH_MODES, match_search
 
 
-@api_view(["GET"])
+@api_view(["POST"])
 def search(req, *args, **kwargs):
     ser = SearchSerializer(data=req.data)
     if ser.is_valid():
         s = ser.validated_data['search']
-        result = PDFSearch.objects.filter(sentence__icontains=s)
+        result = PDFSearch.objects.filter(sentence__iregex=fr'\m{s}\M')
         return Response(PDFSearchSerializer(result, many=True).data)
     else:
         return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+@api_view(["POST"])
+def advanced_search(req, *args, **kwargs):
+    ser = SearchSerializer(data=req.data)
+    if ser.is_valid():
+        s = ser.validated_data['search']
+        valid, mode, result = match_search(s)
+        if valid:
+            return Response(AdvancedSearchSerializer({'results': result, 'count': len(result), 'mode': mode}).data)
+        else:
+            return Response(result, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 MONTH = 60 * 60 * 24 * 30
@@ -32,7 +47,7 @@ MONTH = 60 * 60 * 24 * 30
 def count_word(req, id, word, *args, **kwargs):
     if not PDF.objects.filter(id=id).exists():
         return Response({'error': f'pdf file with ID:{id} NOT FOUND'}, status=status.HTTP_404_NOT_FOUND)
-    result = PDFSearch.objects.filter(pdf_id=id, sentence__iregex=fr'\b{word}\b').values_list('sentence', flat=True)
+    result = PDFSearch.objects.filter(pdf_id=id, sentence__iregex=fr'\m{word}\M').values_list('sentence', flat=True)
     sentences = list(result)
     # c = bench(count_word_algo, word, sentences)
     return Response({'pdf_ID': id, 'word': word.lower(), 'count': count_word_algo(word, sentences), 'sentences': sentences})
@@ -59,5 +74,9 @@ def top_5_words(req, id, *args, **kwargs):
 
 @api_view(["GET"])
 def list_stop_words(req, *args, **kwargs):
-    from .stop_words import STOP_WORDS
     return Response({'stop_words': STOP_WORDS})
+
+
+@api_view(["GET"])
+def list_advance_modes(req, *args, **kwargs):
+    return Response({'Available Advance Search Modes': ADVANCE_SEARCH_MODES})

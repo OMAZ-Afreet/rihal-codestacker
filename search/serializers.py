@@ -11,3 +11,10 @@ class PDFSearchSerializer(serializers.ModelSerializer):
 
 class SearchSerializer(serializers.Serializer):
     search = serializers.CharField(allow_blank=False)
+    
+
+
+class AdvancedSearchSerializer(serializers.Serializer):
+    mode = serializers.CharField()
+    count = serializers.IntegerField()
+    results = PDFSearchSerializer(many=True)

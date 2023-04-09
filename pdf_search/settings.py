@@ -16,7 +16,7 @@ INSTALLED_APPS = [
     "pdf",
     "search",
     "rest_framework",
-    
+    'django.contrib.postgres',
     # "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -57,10 +57,22 @@ WSGI_APPLICATION = "pdf_search.wsgi.application"
 
 
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+       
+        "NAME": "db", 
+        "HOST": "localhost",
+        "USER": "admin",
+        "PASSWORD": "admin",
+        "PORT": "5432"
     }
 }
 

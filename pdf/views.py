@@ -96,7 +96,7 @@ def get_page_image(req, id, page, *args, **kwargs):
             try:
                 dpi = int(i) if int(i) > 0 else dpi
             except:
-                dpi = dpi
+                pass
         
         if j := req.data.get('format', None):
             frmt = j if j in ['jpeg', 'png'] else frmt

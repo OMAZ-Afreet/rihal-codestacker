@@ -7,4 +7,7 @@ urlpatterns = [
   path('stop-words/', v.list_stop_words),
   path('count-word/<int:id>/<str:word>/', v.count_word),
   path('top5/<int:id>/', v.top_5_words),
+  
+  path('advanced-modes/', v.list_advance_modes),
+  path('advanced/', v.advanced_search)
 ]

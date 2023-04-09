@@ -8,7 +8,7 @@ from search.models import PDFSearch
 from .models import PDF
 from .pdf_parser import parse_pdf
 from .exceptions import PDFTaskUpdateFailed
-from .utils import get_file, delete_file
+from .utils import delete_file
 
 logger = get_task_logger(__name__)
 
