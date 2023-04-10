@@ -13,6 +13,8 @@ from .utils import delete_file
 logger = get_task_logger(__name__)
 
 RE = re.compile(r'(?<!Dr)(?<!Mr)(?<!Mrs)(?<!\b\d)\s*[.!?\n]\s+')
+SPACE = re.compile(r'\n')
+
 
 def log_msg(id: int, err: Exception):
     logger.error(
@@ -33,7 +35,7 @@ def parse_pdf_task(id: int, path: str):
         
         raw_sentences = re.split(RE, text)
         # generator for a valid sentence
-        sentences = (PDFSearch(pdf_id=id, sentence=s.replace("\n", " ")) for s in raw_sentences if s)
+        sentences = (PDFSearch(pdf_id=id, sentence=re.sub(SPACE, " ", s)) for s in raw_sentences if s)
         
         batch_size = 100
         while True:

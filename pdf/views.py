@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view, parser_classes
 from rest_framework.parsers import MultiPartParser, FormParser
 
+from pdf_search.paginate import paginate
 from search.models import PDFSearch
 from .models import PDF
 from .serializers import UploadPDFSerializer, PDFSerializer, NewPDFSerializer
@@ -42,6 +43,8 @@ def get_parsing_status(req, id, *args, **kwargs):
 @api_view(["GET"])
 def list_pdf(req, *args, **kwargs):
     p = PDF.objects.all()
+    if r:=paginate(p, req):
+        return Response({'page': f'{r[0].number} of {r[1]}', 'results': PDFSerializer(r[0], many=True).data})
     return Response(PDFSerializer(p, many=True).data)
 
 

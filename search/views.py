@@ -5,6 +5,7 @@ from django.views.decorators.cache import cache_page
 from rest_framework import status
 from rest_framework.decorators import api_view
 
+from pdf_search.paginate import paginate
 from pdf.models import PDF
 from .models import PDFSearch
 from .serializers import SearchSerializer, PDFSearchSerializer, AdvancedSearchSerializer
@@ -21,6 +22,8 @@ def search(req, *args, **kwargs):
     if ser.is_valid():
         s = ser.validated_data['search']
         result = PDFSearch.objects.filter(sentence__iregex=fr'\m{s}\M')
+        if r:=paginate(result, req):
+            return Response({'page': f'{r[0].number} of {r[1]}', 'results': PDFSearchSerializer(r[0], many=True).data})
         return Response(PDFSearchSerializer(result, many=True).data)
     else:
         return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)

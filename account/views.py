@@ -13,8 +13,3 @@ def sign_up(req, *args, **kwargs):
             ser.save()
             return Response(ser.data, status=status.HTTP_201_CREATED)
     return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(["GET"])
-def test_access(req):
-    return Response({'we': 'HERE'})
