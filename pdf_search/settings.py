@@ -13,10 +13,11 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "account",
     "pdf",
     "search",
     "rest_framework",
-    'django.contrib.postgres',
+    "django.contrib.postgres",
     # "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -24,6 +25,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 ]
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -66,13 +68,14 @@ WSGI_APPLICATION = "pdf_search.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-       
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        
         "NAME": "db", 
         "HOST": "localhost",
         "USER": "admin",
         "PASSWORD": "admin",
-        "PORT": "5432"
+        "PORT": "5432",
+        
     }
 }
 
@@ -107,13 +110,19 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
-
+AUTH_USER_MODEL = 'account.User'
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication'
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
     'UPLOADED_FILES_USE_URL': False
 }
 

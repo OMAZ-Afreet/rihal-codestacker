@@ -11,7 +11,7 @@ from .serializers import SearchSerializer, PDFSearchSerializer, AdvancedSearchSe
 from .algorithms import count_word_algo, top_5_words_algo
 # from .utils import bench
 from .stop_words import STOP_WORDS
-from .caches import set_top5_cache, check_top5_cache
+from .caches import set_top5_cache, check_top5_cache, MONTH
 from .advanced import ADVANCE_SEARCH_MODES, match_search
 
 
@@ -39,8 +39,6 @@ def advanced_search(req, *args, **kwargs):
     else:
         return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-MONTH = 60 * 60 * 24 * 30
 
 @api_view(["GET"])
 @cache_page(timeout=MONTH)

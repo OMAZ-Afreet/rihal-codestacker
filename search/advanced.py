@@ -1,7 +1,7 @@
 from django.contrib.postgres.search import SearchQuery, SearchVector
 from .models import PDFSearch
 
-ADVANCE_SEARCH_MODES = ('c', 'ic', 'e', 'ie', 'sw', 'isw', 'ew', 'iew', 'ph', 'raw', 'eng',  'def')
+ADVANCE_SEARCH_MODES = ('c', 'ic', 'e', 'ie', 'sw', 'isw', 'ew', 'iew', 'ph', 'eng',  'def')
 SV = SearchVector("sentence")
 
 
@@ -33,13 +33,12 @@ def match_search(prompt: str):
             res = m.filter(sentence__iendswith=s)
         case 'ph':
             res = m.annotate(search=SV).filter(search=SearchQuery(s, search_type="phrase"))
-        case 'raw':
-            res = m.annotate(search=SV).filter(search=SearchQuery(s, search_type="raw"))
+        # case 'raw':
+        #     res = m.annotate(search=SV).filter(search=SearchQuery(s, search_type="raw"))
         case 'eng':
-            res = m.annotate(search=SV).filter(search=SearchQuery(s, search_type="websearch"))
+            res = m.annotate(search=SV).filter(search=SearchQuery(s, config="english"))
         case _:
             res = m.filter(sentence__search=s)
             mode = 'def'
-    
     
     return True, mode, res
