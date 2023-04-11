@@ -90,4 +90,15 @@ STOP_WORDS = (
     "to",
     "or",
     "on",
+    "our",
+    "much",
+    "many",
+    "all",
+    "some",
+    "little",
+    "as",
+    "however",
+    "would",
+    "should",
+    "done"
 )

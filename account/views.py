@@ -13,3 +13,8 @@ def sign_up(req, *args, **kwargs):
             ser.save()
             return Response(ser.data, status=status.HTTP_201_CREATED)
     return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def login(req, *args, **kwargs):
+    return Response(status=status.HTTP_200_OK)

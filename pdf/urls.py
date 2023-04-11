@@ -6,6 +6,7 @@ urlpatterns = [
     path('upload/', v.upload_pdf),
     path('list/', v.list_pdf),
     path('get/<int:id>/', v.get_pdf),
+    path('retrieve/<int:id>/', v.retrieve_pdf),
     path('download/<int:id>/', v.download_pdf),
     path('list-sentences/<int:id>/', v.list_pdf_sentences),
     path('delete/<int:id>/', v.delete_pdf),

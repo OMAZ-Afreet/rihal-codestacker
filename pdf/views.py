@@ -40,7 +40,7 @@ def get_parsing_status(req, id, *args, **kwargs):
         return Response({'error': f'pdf file with ID:{id} NOT FOUND'}, status=status.HTTP_404_NOT_FOUND)
 
 
-@api_view(["GET"])
+@api_view(["GET", "POST"])
 def list_pdf(req, *args, **kwargs):
     p = PDF.objects.all()
     if r:=paginate(p, req):
@@ -53,6 +53,16 @@ def get_pdf(req, id, *args, **kwargs):
     try:
         p = PDF.objects.get(id=id)
         return Response(PDFSerializer(p).data)
+    except PDF.DoesNotExist:
+        return Response({'error': f'pdf file with ID:{id} NOT FOUND'}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(["GET"])
+def retrieve_pdf(req, id, *args, **kwargs):
+    try:
+        p = PDF.objects.get(id=id)
+        res = FileResponse(p.pdf_file, filename=p.pdf_file.name)
+        return res
     except PDF.DoesNotExist:
         return Response({'error': f'pdf file with ID:{id} NOT FOUND'}, status=status.HTTP_404_NOT_FOUND)
 

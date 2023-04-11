@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     "search",
     "rest_framework",
     "django.contrib.postgres",
+    "corsheaders",
     # "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -29,6 +30,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -148,3 +151,25 @@ CACHES = {
         "TIMEOUT": None
     }
 }
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "POST",
+]
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+    "Access-Control-Allow-Headers"
+]
