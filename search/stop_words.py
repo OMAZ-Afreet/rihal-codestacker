@@ -100,5 +100,9 @@ STOP_WORDS = (
     "however",
     "would",
     "should",
-    "done"
+    "done",
+    "better",
+    "worse",
+    "being",
+    "having"
 )

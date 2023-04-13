@@ -42,7 +42,7 @@ def get_parsing_status(req, id, *args, **kwargs):
 
 @api_view(["GET", "POST"])
 def list_pdf(req, *args, **kwargs):
-    p = PDF.objects.all()
+    p = PDF.objects.all().order_by('-time_of_upload')
     if r:=paginate(p, req):
         return Response({'page': f'{r[0].number} of {r[1]}', 'results': PDFSerializer(r[0], many=True).data})
     return Response(PDFSerializer(p, many=True).data)
@@ -99,7 +99,7 @@ def delete_pdf(req, id, *args, **kwargs):
         return Response({'error': f'pdf file with ID:{id} NOT FOUND'}, status=status.HTTP_404_NOT_FOUND)
 
 
-@api_view(["GET"])
+@api_view(["GET", "POST"])
 def get_page_image(req, id, page, *args, **kwargs):
     try:
         dpi = 96
@@ -124,7 +124,7 @@ def get_page_image(req, id, page, *args, **kwargs):
         return Response({'error': f'Page: {page} not in pdf: {p.pdf_file.name} | Possible Pages: 1-{p.number_of_pages}'}, status=status.HTTP_404_NOT_FOUND)
 
 
-@api_view(["GET"])
+@api_view(["GET", "POST"])
 def download_page_image(req, id, page, *args, **kwargs):
     try:
         dpi = 96
