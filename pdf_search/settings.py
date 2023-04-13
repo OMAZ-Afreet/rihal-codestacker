@@ -5,9 +5,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "django-insecure-(g_e!(#=h0n-2*mevcagx^7=e@4m4g160#6&yo*4sigu+2sqr4"
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -16,6 +16,8 @@ INSTALLED_APPS = [
     "account",
     "pdf",
     "search",
+    "docs",
+    "home",
     "rest_framework",
     "django.contrib.postgres",
     "corsheaders",

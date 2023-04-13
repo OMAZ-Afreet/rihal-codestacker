@@ -1,0 +1,7 @@
+from django.http import JsonResponse
+
+
+def _404(req, *args, **kwargs):
+    return JsonResponse({
+        "404 not found": f"This url doesn't exists. Please check {req.scheme}://{req.get_host()}/docs/ for full documentation and available routes."
+    })

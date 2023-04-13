@@ -17,12 +17,12 @@ from .pdf_parser import page_to_image
 @parser_classes([MultiPartParser, FormParser])
 def upload_pdf(req, *args, **kwargs):
     ser = UploadPDFSerializer(data=req.data)
-    if ser.is_valid(raise_exception=True):
+    if ser.is_valid():
         files = ser.validated_data.pop('file')
         pdfs = []
         for f in files:
             if PDF.objects.filter(pdf_file=f.name).exists():
-                return Response({'error': f'file: {f.name} already exists!'})
+                return Response({'error': f'file: {f.name} already exists!'}, status=status.HTTP_400_BAD_REQUEST)
             pdf = PDF.objects.create(pdf_file=f, size=f.size)
             pdfs.append(pdf)
             parse_pdf_task.delay(pdf.id, pdf.pdf_file.name)

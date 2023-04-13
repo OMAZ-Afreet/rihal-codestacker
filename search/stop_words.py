@@ -104,5 +104,8 @@ STOP_WORDS = (
     "better",
     "worse",
     "being",
-    "having"
+    "having",
+    "than",
+    "more",
+    "were"
 )
