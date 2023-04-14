@@ -179,8 +179,8 @@
       "get": {
         "operationId": "3",
         "tags": ["PDF"],
-        "summary": "List ALL files",
-        "description": "Use this endpoint to all files at once.",
+        "summary": "List ALL PDF files",
+        "description": "Use this endpoint to list all files at once.",
         "responses": {
           "200": {
             "description": "",
@@ -211,7 +211,7 @@
       "post": {
         "operationId": "4",
         "tags": ["PDF"],
-        "summary": "Paginate the list",
+        "summary": "Paginate the PDF list",
         "description": "Use this endpoint to list the files with pagination.",
         "requestBody": {
           "content": {
@@ -334,7 +334,7 @@
         "operationId": "6",
         "tags": ["PDF"],
         "summary": "Download pdf",
-        "description": "Use this endpoint to retrieve pdf file with its ID.",
+        "description": "Use this endpoint to retrieve a pdf file with its ID.",
         "parameters": [
           {
             "in": "path",
@@ -349,7 +349,7 @@
           "200": {
             "description": "",
             "content": {
-              "application/pdf": {}
+              "*/*": {}
             }
           },
 
@@ -498,7 +498,7 @@
       }
     },
 
-    "/pdf/{id}/download/{page}/": {
+    "/pdf/{id}/download-page/{page}/": {
       "get": {
         "operationId": "10",
         "tags": ["PDF"],
@@ -526,7 +526,7 @@
           "200": {
             "description": "",
             "content": {
-              "image/jpeg": {}
+              "*/*": {}
             }
           },
 
@@ -619,7 +619,7 @@
           "200": {
             "description": "",
             "content": {
-              "image/png": {}
+              "*/*": {}
             }
           },
 
@@ -884,7 +884,7 @@
         "operationId": "15",
         "tags": ["Search"],
         "summary": "Occurrence of a word",
-        "description": "Use this endpoint to get the total number of times the word is found, in addition to all the sentences the word is found in.",
+        "description": "Use this endpoint to get the total number of times the word is found, in addition to all the sentences the word is found in.\n\nNote: using a word like 'help', WILL NOT count words like 'helps', 'helping'!",
         "parameters": [
           {
             "in": "path",

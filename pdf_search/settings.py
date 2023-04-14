@@ -3,9 +3,9 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = "django-insecure-(g_e!(#=h0n-2*mevcagx^7=e@4m4g160#6&yo*4sigu+2sqr4"
+SECRET_KEY = "alqasim-alzakwani-(g_e!(#=h0n-2*mevcagx^7=e@4m4g160#6&yo*4sigu+2sqr4"
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -114,6 +114,14 @@ USE_TZ = True
 
 
 STATIC_URL = "static/"
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+STATICFILES_DIRS = [
+    BASE_DIR / "home/templates/static/"
+]
+
+
 
 AUTH_USER_MODEL = 'account.User'
 
