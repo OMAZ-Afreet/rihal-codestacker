@@ -21,7 +21,7 @@ def search(req, *args, **kwargs):
     ser = SearchSerializer(data=req.data)
     if ser.is_valid():
         s = ser.validated_data['search']
-        result = PDFSearch.objects.filter(sentence__iregex=fr'\m{s}\M')
+        result = PDFSearch.objects.filter(sentence__iregex=fr'\m{s}\M').order_by('-id')
         if r:=paginate(result, req):
             return Response({'page': f'{r[0].number} of {r[1]}', 'results': PDFSearchSerializer(r[0], many=True).data})
         return Response(PDFSearchSerializer(result, many=True).data)

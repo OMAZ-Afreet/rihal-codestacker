@@ -1,4 +1,4 @@
-SCHEMA = {
+{
   "openapi": "3.0.3",
   "info": {
     "title": "CodeStacker API",
@@ -38,7 +38,7 @@ SCHEMA = {
         "summary": "Sign up new account",
         "description": "Use this endpoint to register new account for authenticating the other endpoints.\n\nNote: There is no requirements for valid username and password. Could be anything.",
         "requestBody": {
-          "required": True,
+          "required": true,
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -121,7 +121,7 @@ SCHEMA = {
         "summary": "Upload new PDFs",
         "description": "Use this endpoint to upload PDF files.\n\nNote that you can upload multiple files.",
         "requestBody": {
-          "required": True,
+          "required": true,
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -179,8 +179,8 @@ SCHEMA = {
       "get": {
         "operationId": "3",
         "tags": ["PDF"],
-        "summary": "List ALL PDF files",
-        "description": "Use this endpoint to list all files at once.",
+        "summary": "List ALL files",
+        "description": "Use this endpoint to all files at once.",
         "responses": {
           "200": {
             "description": "",
@@ -211,7 +211,7 @@ SCHEMA = {
       "post": {
         "operationId": "4",
         "tags": ["PDF"],
-        "summary": "Paginate the PDF list",
+        "summary": "Paginate the list",
         "description": "Use this endpoint to list the files with pagination.",
         "requestBody": {
           "content": {
@@ -292,7 +292,7 @@ SCHEMA = {
         "parameters": [
           {
             "in": "path",
-            "required": True,
+            "required": true,
             "name": "id",
             "schema": {
               "type": "number"
@@ -334,11 +334,11 @@ SCHEMA = {
         "operationId": "6",
         "tags": ["PDF"],
         "summary": "Download pdf",
-        "description": "Use this endpoint to retrieve a pdf file with its ID.",
+        "description": "Use this endpoint to retrieve pdf file with its ID.",
         "parameters": [
           {
             "in": "path",
-            "required": True,
+            "required": true,
             "name": "id",
             "schema": {
               "type": "number"
@@ -349,7 +349,7 @@ SCHEMA = {
           "200": {
             "description": "",
             "content": {
-              "*/*": {}
+              "application/pdf": {}
             }
           },
 
@@ -376,7 +376,7 @@ SCHEMA = {
         "parameters": [
           {
             "in": "path",
-            "required": True,
+            "required": true,
             "name": "id",
             "schema": {
               "type": "number"
@@ -423,7 +423,7 @@ SCHEMA = {
         "parameters": [
           {
             "in": "path",
-            "required": True,
+            "required": true,
             "name": "id",
             "schema": {
               "type": "number"
@@ -464,7 +464,7 @@ SCHEMA = {
         "parameters": [
           {
             "in": "path",
-            "required": True,
+            "required": true,
             "name": "id",
             "schema": {
               "type": "number"
@@ -498,7 +498,7 @@ SCHEMA = {
       }
     },
 
-    "/pdf/{id}/download-page/{page}/": {
+    "/pdf/{id}/download/{page}/": {
       "get": {
         "operationId": "10",
         "tags": ["PDF"],
@@ -507,7 +507,7 @@ SCHEMA = {
         "parameters": [
           {
             "in": "path",
-            "required": True,
+            "required": true,
             "name": "id",
             "schema": {
               "type": "number"
@@ -515,7 +515,7 @@ SCHEMA = {
           },
           {
             "in": "path",
-            "required": True,
+            "required": true,
             "name": "page",
             "schema": {
               "type": "number"
@@ -526,7 +526,7 @@ SCHEMA = {
           "200": {
             "description": "",
             "content": {
-              "*/*": {}
+              "image/jpeg": {}
             }
           },
 
@@ -561,7 +561,7 @@ SCHEMA = {
         "parameters": [
           {
             "in": "path",
-            "required": True,
+            "required": true,
             "name": "id",
             "schema": {
               "type": "number"
@@ -569,7 +569,7 @@ SCHEMA = {
           },
           {
             "in": "path",
-            "required": True,
+            "required": true,
             "name": "page",
             "schema": {
               "type": "number"
@@ -619,7 +619,7 @@ SCHEMA = {
           "200": {
             "description": "",
             "content": {
-              "*/*": {}
+              "image/png": {}
             }
           },
 
@@ -654,7 +654,7 @@ SCHEMA = {
         "summary": "Search for the existence of a keyword",
         "description": "This endpoint search for the existence of a certain keyword in ALL PDF files. It returns all the sentences the word was found in with their PDF ID.\n\nNote: This will search for a word as given exactly (case-insensitive). So if searched for 'help', results with 'helps', 'helping' WILL NOT be returned!\n\nNote: This endpoint can be paginated! (OPTIONAL)\n\nIMPORTANT: for more capable search use '/search/advanced/' (check docs below).",
         "requestBody": {
-          "required": True,
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -764,7 +764,7 @@ SCHEMA = {
         "summary": "Advanced search",
         "description": "This endpoint is more capable than the regular search.\n\nUSE: [mode]:[search]\n\nAvailable modes: ['def', 'c', 'ic', 'e', 'ie', 'sw', 'isw', 'ew', 'iew', 'ph', 'eng']\n\nExample: using the same example in regular search, if you search 'ic:help', results with 'helps', 'helping' WILL be returned.\n\nTo understand all modes and how to use them, please visit the home page and check 'Advanced Search' page. The home page has a path of '/' or go to http://localhost:8000/",
         "requestBody": {
-          "required": True,
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -884,11 +884,11 @@ SCHEMA = {
         "operationId": "15",
         "tags": ["Search"],
         "summary": "Occurrence of a word",
-        "description": "Use this endpoint to get the total number of times the word is found, in addition to all the sentences the word is found in.\n\nNote: using a word like 'help', WILL NOT count words like 'helps', 'helping'!",
+        "description": "Use this endpoint to get the total number of times the word is found, in addition to all the sentences the word is found in.",
         "parameters": [
           {
             "in": "path",
-            "required": True,
+            "required": true,
             "name": "id",
             "schema": {
               "type": "number"
@@ -896,7 +896,7 @@ SCHEMA = {
           },
           {
             "in": "path",
-            "required": True,
+            "required": true,
             "name": "word",
             "schema": {
               "type": "string"
@@ -941,7 +941,7 @@ SCHEMA = {
         "parameters": [
           {
             "in": "path",
-            "required": True,
+            "required": true,
             "name": "id",
             "schema": {
               "type": "number"
@@ -983,7 +983,7 @@ SCHEMA = {
         "parameters": [
           {
             "in": "path",
-            "required": True,
+            "required": true,
             "name": "id",
             "schema": {
               "type": "number"

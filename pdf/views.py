@@ -116,7 +116,7 @@ def get_page_image(req, id, page, *args, **kwargs):
         
         p = PDF.objects.get(id=id)
         img = page_to_image(p.pdf_file.name, page, dpi)
-        res = FileResponse(ContentFile(img), filename=f'{p.pdf_file.name}_page_{page}.{frmt}')
+        res = FileResponse(ContentFile(img), filename=f'{p.pdf_file.name.removesuffix(".pdf")}_page_{page}.{frmt}')
         return res
     except PDF.DoesNotExist:
         return Response({'error': f'pdf file with ID:{id} NOT FOUND'}, status=status.HTTP_404_NOT_FOUND)
@@ -141,7 +141,7 @@ def download_page_image(req, id, page, *args, **kwargs):
         
         p = PDF.objects.get(id=id)
         img = page_to_image(p.pdf_file.name, page, dpi)
-        res = FileResponse(ContentFile(img), filename=f'{p.pdf_file.name}_page_{page}.{frmt}', as_attachment=True)
+        res = FileResponse(ContentFile(img), filename=f'{p.pdf_file.name.removesuffix(".pdf")}_page_{page}.{frmt}', as_attachment=True)
         return res
     except PDF.DoesNotExist:
         return Response({'error': f'pdf file with ID:{id} NOT FOUND'}, status=status.HTTP_404_NOT_FOUND)
