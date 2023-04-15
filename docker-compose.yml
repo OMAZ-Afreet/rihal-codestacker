@@ -36,7 +36,12 @@ services:
     restart: always
     entrypoint: ["sh", "/app/worker-entrypoint.sh"]
     environment:
+      - DB_NAME=pdf_search
+      - DB_USER=alqasim
+      - DB_PASSWORD=alzakwani
+      - DB_HOST=db
       - BC_URL=redis://bc:6379
     depends_on:
       - app
       - bc
+      - db
