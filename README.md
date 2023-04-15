@@ -2,9 +2,9 @@
 
 # **_Approach_**
 
-The first challenge, and probably was the hardest, was how would I _define_ a sentence. Since there wasn't an example nor a PDF specimen to test my solution on, I took the liberty to come up with a definition of my own. Many ideas came to mind, and many trials were conducted. Eventually, I landed on the fact that sentences are separated by ". " (namely a period followed by a space).
+The first challenge, and probably the hardest, was how would I _define_ a sentence. Since there wasn't an example nor a PDF specimen to test my solution on, I took the liberty to come up with a definition of my own. Many ideas came to mind, and many trials were conducted. Eventually, I landed on the fact that sentences are separated by ". " (namely a period followed by a space).
 
-Other than that, everything was relatively straight forward, from choosing the technologies to planning and execution. To note a few, I took performance and optimization up a notch by delegating heavy operations to background workers and repeated operations, like parsing and top words respectively. In addition, practicality and usefulness were important to me that I added extra functionalities to most endpoints (check UI I built to interact with this API at "http://localhost:8000/" and the docs at "http://localhost:8000/docs/" or /docs/v2/)
+Other than that, everything was relatively straight forward, from choosing the technologies to planning and execution. To note a few, I took performance and optimization up a notch by delegating heavy operations to background workers and caching repeated tasks, like parsing and top words respectively. In addition, practicality and usefulness were important to me that I added extra functionalities to most endpoints (check UI I built to interact with this API at "http://localhost:8000/" and the docs at "http://localhost:8000/docs/" or /docs/v2/)
 
 # **_Instructions_**
 
