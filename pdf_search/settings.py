@@ -1,11 +1,13 @@
+import os
+
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = "alqasim-alzakwani-(g_e!(#=h0n-2*mevcagx^7=e@4m4g160#6&yo*4sigu+2sqr4"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
-DEBUG = False
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = ['*']
 
@@ -75,11 +77,11 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
         
-        "NAME": "db", 
-        "HOST": "localhost",
-        "USER": "admin",
-        "PASSWORD": "admin",
-        "PORT": "5432",
+        "NAME": os.getenv("DB_NAME"), 
+        "HOST": os.getenv("DB_HOST"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
+        "PORT": 5432,
         
     }
 }
@@ -139,9 +141,9 @@ REST_FRAMEWORK = {
     'UPLOADED_FILES_USE_URL': False
 }
 
-
+# BC stands for Broker Cache
 CELERY_TIMEZONE = TIME_ZONE
-CELERY_BROKER_URL = "redis://127.0.0.1:6379"
+CELERY_BROKER_URL = os.getenv("BC_URL")
 
 
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
@@ -157,7 +159,7 @@ GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379",
+        "LOCATION": os.getenv("BC_URL"),
         "TIMEOUT": None
     }
 }

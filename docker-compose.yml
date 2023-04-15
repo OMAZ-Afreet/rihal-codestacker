@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_DB=pdf_search
+      - POSTGRES_USER=alqasim
+      - POSTGRES_PASSWORD=alzakwani
+
+  bc:
+    image: redis
+    restart: always
+
+  app:
+    build: .
+    restart: always
+    volumes:
+      - .:/app
+    entrypoint: ["sh", "/app/app-entrypoint.sh"]
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_NAME=pdf_search
+      - DB_USER=alqasim
+      - DB_PASSWORD=alzakwani
+      - DB_HOST=db
+      - BC_URL=redis://bc:6379
+    depends_on:
+      - db
+      - bc
+
+  worker:
+    build: .
+    restart: always
+    entrypoint: ["sh", "/app/worker-entrypoint.sh"]
+    environment:
+      - BC_URL=redis://bc:6379
+    depends_on:
+      - app
+      - bc

@@ -15,7 +15,7 @@ SCHEMA = {
     }
   },
   "security": [{ "Basic": [] }],
-  "servers": [{ "url": "http://127.0.0.1:8000", "description": "Main server" }],
+  "servers": [{ "url": "http://localhost/:8000", "description": "Main server" }],
 
   "tags": [
     {
