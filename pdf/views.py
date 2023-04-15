@@ -1,4 +1,5 @@
 from django.http import FileResponse
+from django.views.decorators.cache import cache_page
 from django.core.files.base import ContentFile
 from rest_framework.response import Response
 from rest_framework import status
@@ -49,6 +50,7 @@ def list_pdf(req, *args, **kwargs):
 
 
 @api_view(["GET"])
+@cache_page(60 * 60 * 24 * 30)
 def get_pdf(req, id, *args, **kwargs):
     try:
         p = PDF.objects.get(id=id)
@@ -79,6 +81,7 @@ def download_pdf(req, id, *args, **kwargs):
 
 
 @api_view(["GET"])
+@cache_page(60 * 60 * 24 * 30)
 def list_pdf_sentences(req, id, *args, **kwargs):
     try:
         p = PDF.objects.only('id', 'pdf_file').get(id=id)
